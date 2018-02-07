@@ -17,16 +17,36 @@ class turtleCommandsClass():
 			#Checking where each item belongs and how to run it
 			
 			#Checking if the item belongs to int commands list (if it was one above or below)
-			if x[1] in intCommandsFull or x[1] in intCommandsShort:
+			if turtleCommandsClass.__isIntTurtleCommand(x[1]):
 				self.turtleCommandsLst.append('{0} {1}'.format(x[1], l[x[0]+1]))
 
 			#Same thing here
-			if x[1] in nonValueCommands:
+			if turtleCommandsClass.__isNonValueCommand(x[1]):
 				self.turtleCommandsLst.append(x[1])
 
 			#continuing if the item is an interger
 			if x[1].isdigit() or x[1].isdecimal():
 				continue
+
+
+	@staticmethod
+	def __isNonValueCommand(cmd):
+		return cmd in nonValueCommands
+
+	@staticmethod
+	def __isIntTurtleCommand(cmd):
+		 
+		ch1 = turtleCommandsClass.__isShortLengthIntTurtleCommand(cmd) 
+		ch2 = turtleCommandsClass.__isFullLengthIntTurtleCommand(cmd)
+		return ch1 or ch2
+
+	@staticmethod
+	def __isFullLengthIntTurtleCommand(cmd):
+		return cmd in intCommandsFull
+
+	@staticmethod
+	def __isShortLengthIntTurtleCommand(cmd):
+		return cmd in intCommandsShort
 
 
 	def __checkTurtleSyntax(self, command):
@@ -77,18 +97,6 @@ class turtleCommandsClass():
 
 	def saveArduinoCode(self, fileName='Output Arduino Code.ino'):
 		open(fileName,'w').write(self.getArduinoCode())
-
-
-	def saveChangesToSourceCode(self, modifiedSourceCode):
-		Warning('This has not been tested yet')
-		Warning('''Ensure that the lines: '//1650--TENNIS' is present in the comments
-				That line is used as a replacement placeholder for easy formatting''')
-
-		if '//1650--TENNIS' not in modifiedSourceCode:
-			raise ValueError("Command: //1650--TENNIS not found")
-
-		data=open(modifiedSourceCode, 'r').read()
-		pickle.dump(data, open("arduinoSourceCode--To Mod.txt",'wb'))
 
 
 def main():
