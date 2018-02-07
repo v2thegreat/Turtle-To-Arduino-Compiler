@@ -12,7 +12,8 @@ class turtleCommandsClass():
 		l=self.turtleCode.split() #Getting individual words
 		self.turtleCommandsLst=[] #Creating a list to save commands
 		for x in enumerate(l):
-			self.__checkTurtleSyntax(x[1]) #Checking each items format and raising errors when they're incorrect
+
+			turtleCommandsClass.__checkTurtleSyntax(x[1]) #Checking each items format and raising errors when they're incorrect
 
 			#Checking where each item belongs and how to run it
 			
@@ -48,25 +49,25 @@ class turtleCommandsClass():
 	def __isShortLengthIntTurtleCommand(cmd):
 		return cmd in intCommandsShort
 
-
-	def __checkTurtleSyntax(self, command):
+	@staticmethod
+	def __checkTurtleSyntax(cmd):
 		#Checking if command belongs in intCommandsShort
-		ch1 = command in intCommandsShort
+		ch1 = turtleCommandsClass.__isIntTurtleCommand(cmd) #cmd in intCommandsShort
 
-		#Checking if command belongs in intCommandsFull
-		ch2 = command in intCommandsFull
+		# #Checking if command belongs in intCommandsFull
+		# ch2 = turtleCommandsClass.__is #cmd in intCommandsFull
 
 		#Checking if command belongs in nonValueCommands
-		ch3 = command in nonValueCommands
+		ch3 = turtleCommandsClass.__isNonValueCommand(cmd) #cmd in nonValueCommands
 
 		#Checking if the command is actually an integer
-		ch4 = command.isdigit() or command.isdecimal()
+		ch4 = cmd.isdigit() or cmd.isdecimal()
 
 		#If any of these conditions are true, and raises if none of them work
-		if (ch1 or ch2 or ch3 or ch4):
+		if (ch1 or ch3 or ch4):
 			return None
 		else:
-			raise SyntaxError('Invalid Command: {0} not understood'.format(command))
+			raise SyntaxError('Invalid Command: {0} not understood'.format(cmd))
 
 
 	#Method for converting mainloop code to C++ arduino Code
