@@ -1,4 +1,4 @@
-getArduinoSourceCode = '''int MovePin=2;
+sourcecode = '''int MovePin=2;
 int TurnPin=3;
 int PenLEDPin=4;
 int VisibilityPin=5;
